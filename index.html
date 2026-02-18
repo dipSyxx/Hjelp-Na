@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hjelp N&aring;</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a href="index.html" class="logo">Hjelp N&aring;</a>
+        <nav class="nav">
+          <a class="active" href="index.html">Forside</a>
+          <a href="mental.html">Mental helse</a>
+          <a href="#">F&aring; hjelp</a>
+          <a href="#" data-open-chat>Kontakt</a>
+        </nav>
+        <button class="btn btn-small btn-primary" data-open-chat>Snakk med noen</button>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <h1>Du er ikke alene</h1>
+          <p>Du trenger ikke ha det veldig vanskelig for &aring; ta kontakt</p>
+          <p>Vi er her for deg</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-open-chat>Snakk med en helsehjelper</button>
+            <a href="mental.html" class="btn btn-light">Les om mental helse</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <img src="img/image2.svg" alt="Illustrasjon av to personer som snakker sammen." />
+        </div>
+      </section>
+
+      <section id="mental" class="section">
+        <h2>Hva kan du f&aring; hjelp med?</h2>
+        <div class="cards-grid">
+          <article class="topic-card">
+            <img src="img/image 3.svg" alt="" />
+            <span>Stress og skole</span>
+          </article>
+          <article class="topic-card">
+            <img src="img/image 4.svg" alt="" />
+            <span>Familie</span>
+          </article>
+          <article class="topic-card">
+            <img src="img/image 7.svg" alt="" />
+            <span>S&oslash;vnproblemer</span>
+          </article>
+          <article class="topic-card">
+            <img src="img/image 5.svg" alt="" />
+            <span>Kropp og selvbilde</span>
+          </article>
+          <article class="topic-card">
+            <img src="img/image 6.svg" alt="" />
+            <span>Vennskap</span>
+          </article>
+          <article class="topic-card">
+            <img src="img/image 11.svg" alt="" />
+            <span>Angst og uro</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section flow">
+        <div class="line-title">
+          <span></span>
+          <h2>Slik fungerer det</h2>
+          <span></span>
+        </div>
+        <div class="cards-grid flow-grid">
+          <article class="topic-card flow-card">
+            <img src="img/image 9.svg" alt="" />
+            <span>Ta kontakt</span>
+          </article>
+          <article class="topic-card flow-card">
+            <img src="img/image 10.svg" alt="" />
+            <span>Vi lytter</span>
+          </article>
+          <article class="topic-card flow-card">
+            <img src="img/image 8.svg" alt="" />
+            <span>Du f&aring;r st&oslash;tte</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section" id="kontakt-skjema">
+        <h2>Kontakt oss</h2>
+        <p>Send oss en melding, s&aring; svarer vi s&aring; fort vi kan.</p>
+
+        <form class="contact-form" id="contactForm">
+          <label class="form-field">
+            <span>Navn</span>
+            <input type="text" name="name" placeholder="Skriv navnet ditt" required />
+          </label>
+          <label class="form-field">
+            <span>E-post</span>
+            <input type="email" name="email" placeholder="navn@epost.no" required />
+          </label>
+          <label class="form-field form-field-full">
+            <span>Hva vil du snakke om?</span>
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Skriv meldingen din her..."
+              required
+            ></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary form-submit">Send melding</button>
+        </form>
+
+        <div class="form-success" id="formSuccess" aria-live="polite" aria-hidden="true">
+          <span class="success-check" aria-hidden="true">&#10003;</span>
+          <span>Meldingen er sendt!</span>
+          <span class="success-spark success-spark-1" aria-hidden="true"></span>
+          <span class="success-spark success-spark-2" aria-hidden="true"></span>
+          <span class="success-spark success-spark-3" aria-hidden="true"></span>
+        </div>
+      </section>
+    </div>
+
+    <section class="cta-strip">
+      <div class="cta-box">
+        <h3>Snakk med en helsesykepleier</h3>
+        <p>Det er trygt. Du kan snakke om hva som helst</p>
+        <button class="btn btn-light btn-cta" data-open-chat>Kontakt oss</button>
+      </div>
+    </section>
+
+    <div class="chat-overlay" data-close-chat></div>
+    <aside class="chat-drawer" aria-hidden="true" aria-label="Chat">
+      <div class="chat-head">
+        <h4>Hjelp N&aring;-chat</h4>
+        <button class="chat-close" aria-label="Lukk chat" data-close-chat>&times;</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="bubble helper">Hei! Hvordan har du det i dag?</div>
+        <div class="bubble helper">Du kan skrive her n&aring;r du vil.</div>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" type="text" placeholder="Skriv en melding..." autocomplete="off" />
+        <button type="submit" class="btn btn-primary btn-send">Send</button>
+      </form>
+    </aside>
+
+    <script src="script.js"></script>
+  </body>
+</html>

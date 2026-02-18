@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mental helse - Hjelp N&aring;</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a href="index.html" class="logo">Hjelp N&aring;</a>
+        <nav class="nav">
+          <a href="index.html">Forside</a>
+          <a class="active" href="mental.html">Mental helse</a>
+          <a href="#">F&aring; hjelp</a>
+          <a href="#" data-open-chat>Kontakt</a>
+        </nav>
+        <button class="btn btn-small btn-primary" data-open-chat>Snakk med noen</button>
+      </header>
+
+      <main class="mental-page">
+        <section class="mental-top">
+          <div class="mental-intro">
+            <h1>Mental helse</h1>
+            <p>Mental helse handler om hvordan du har det inni deg</p>
+            <p>Det er normalt &aring; oppleve stress og vanskelige tanker</p>
+          </div>
+
+          <div class="mental-check-grid">
+            <article class="mental-check-card">
+              <span class="mental-mark-icon" aria-hidden="true"></span>
+              <span>Jeg f&oslash;ler meg stresset</span>
+            </article>
+            <article class="mental-check-card">
+              <span class="mental-mark-icon" aria-hidden="true"></span>
+              <span>Vi sover d&aring;rlig</span>
+            </article>
+            <article class="mental-check-card">
+              <span class="mental-mark-icon" aria-hidden="true"></span>
+              <span>Jeg f&oslash;ler meg alene</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="mental-flow">
+          <div class="line-title">
+            <span></span>
+            <h2>Slik funker det</h2>
+            <span></span>
+          </div>
+
+          <article class="mental-faq-item active">
+            <span class="mental-faq-icon chat" aria-hidden="true">&#128172;</span>
+            <span>Hva skjer hvis jeg tar kontakt?</span>
+          </article>
+          <article class="mental-faq-item">
+            <span class="mental-faq-icon heart" aria-hidden="true">&#10084;&#65039;</span>
+            <span>M&aring; jeg fortelle alt?</span>
+          </article>
+          <article class="mental-faq-item">
+            <span class="mental-faq-icon lock" aria-hidden="true">&#128274;</span>
+            <span>Er det privat?</span>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <section class="mental-cta">
+      <h2>Vil du snakke med noen?</h2>
+      <button class="btn btn-primary" data-open-chat>Snakk med helsesykepleier</button>
+    </section>
+
+    <div class="chat-overlay" data-close-chat></div>
+    <aside class="chat-drawer" aria-hidden="true" aria-label="Chat">
+      <div class="chat-head">
+        <h4>Hjelp N&aring;-chat</h4>
+        <button class="chat-close" aria-label="Lukk chat" data-close-chat>&times;</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="bubble helper">Hei! Hvordan har du det i dag?</div>
+        <div class="bubble helper">Du kan skrive her n&aring;r du vil.</div>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" type="text" placeholder="Skriv en melding..." autocomplete="off" />
+        <button type="submit" class="btn btn-primary btn-send">Send</button>
+      </form>
+    </aside>
+
+    <script src="script.js"></script>
+  </body>
+</html>
