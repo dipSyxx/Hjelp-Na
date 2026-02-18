@@ -7,8 +7,10 @@ const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const contactForm = document.getElementById("contactForm");
 const formSuccess = document.getElementById("formSuccess");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let introTimer = null;
+let interactionsReady = false;
 
 function getRevealTargets() {
   const selectors = [
@@ -66,10 +68,99 @@ function runIntroAnimation() {
   }, 30);
 }
 
+function setupInteractiveCards() {
+  const cards = Array.from(document.querySelectorAll("#mental .topic-card, .flow-grid .flow-card"));
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    card.setAttribute("tabindex", "0");
+
+    const resetCard = () => {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+      card.style.setProperty("--glow-x", "50%");
+      card.style.setProperty("--glow-y", "50%");
+      card.classList.remove("is-hovered");
+    };
+
+    if (!prefersReducedMotion.matches) {
+      card.addEventListener("pointermove", (event) => {
+        const rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+        card.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y", `${(x * 9).toFixed(2)}deg`);
+        card.style.setProperty("--glow-x", `${((x + 0.5) * 100).toFixed(1)}%`);
+        card.style.setProperty("--glow-y", `${((y + 0.5) * 100).toFixed(1)}%`);
+        card.classList.add("is-hovered");
+      });
+    }
+
+    card.addEventListener("pointerenter", () => card.classList.add("is-hovered"));
+    card.addEventListener("pointerleave", resetCard);
+    card.addEventListener("focus", () => card.classList.add("is-hovered"));
+    card.addEventListener("blur", resetCard);
+  });
+}
+
+function setupFlowProgressInteraction() {
+  const flowGrid = document.querySelector(".flow-grid");
+  if (!flowGrid) return;
+
+  const cards = Array.from(flowGrid.querySelectorAll(".flow-card"));
+  if (!cards.length) return;
+
+  const maxTrack = 74;
+  const maxIndex = Math.max(cards.length - 1, 1);
+
+  const setActiveStep = (stepIndex) => {
+    const activeIndex = Math.max(0, Math.min(stepIndex, cards.length - 1));
+    const progress = (activeIndex / maxIndex) * maxTrack;
+
+    flowGrid.style.setProperty("--flow-progress", `${progress}%`);
+    cards.forEach((card, index) => {
+      card.classList.toggle("trail", index <= activeIndex);
+      card.classList.toggle("is-active", index === activeIndex);
+    });
+  };
+
+  cards.forEach((card, index) => {
+    card.addEventListener("mouseenter", () => setActiveStep(index));
+    card.addEventListener("focus", () => setActiveStep(index));
+    card.addEventListener("click", () => setActiveStep(index));
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      setActiveStep(index);
+    });
+  });
+
+  flowGrid.addEventListener("mouseleave", () => setActiveStep(0));
+  setActiveStep(0);
+}
+
+function setupSectionInteractions() {
+  if (interactionsReady) return;
+  interactionsReady = true;
+  setupInteractiveCards();
+  setupFlowProgressInteraction();
+}
+
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", runIntroAnimation, { once: true });
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      runIntroAnimation();
+      setupSectionInteractions();
+    },
+    { once: true }
+  );
 } else {
   runIntroAnimation();
+  setupSectionInteractions();
 }
 
 window.addEventListener("pageshow", (event) => {

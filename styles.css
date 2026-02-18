@@ -107,7 +107,10 @@ a {
   padding: 16px 24px;
   font-size: clamp(24px, 1.35vw, 30px);
   text-decoration: none;
-  transition: transform 0.15s ease, opacity 0.15s ease, background 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    background 0.2s ease;
 }
 
 .btn:hover {
@@ -218,6 +221,56 @@ a {
   padding: 10px 16px;
   font-size: clamp(23px, 1.26vw, 31px);
   font-weight: 700;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(21, 93, 94, 0.08);
+  cursor: pointer;
+  transform-origin: center;
+  transform: perspective(860px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+  transition:
+    transform 0.34s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease,
+    background 0.28s ease;
+}
+
+.topic-card::before {
+  content: "";
+  position: absolute;
+  inset: -45% -30%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(64, 167, 164, 0.24) 0%,
+    rgba(64, 167, 164, 0.08) 26%,
+    transparent 58%
+  );
+  opacity: 0;
+  transition: opacity 0.26s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.topic-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+#mental .topic-card:hover,
+#mental .topic-card:focus-visible,
+#mental .topic-card.is-hovered {
+  transform: perspective(860px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg)) translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 30px rgba(16, 37, 42, 0.2);
+  border-color: rgba(34, 117, 118, 0.34);
+  background: linear-gradient(132deg, #ffffff 0%, #f1faf9 100%);
+}
+
+#mental .topic-card:hover::before,
+#mental .topic-card:focus-visible::before,
+#mental .topic-card.is-hovered::before {
+  opacity: 1;
 }
 
 .topic-card img {
@@ -225,6 +278,30 @@ a {
   height: 42px;
   object-fit: contain;
   display: block;
+  transform-origin: center;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+#mental .topic-card:hover img,
+#mental .topic-card:focus-visible img,
+#mental .topic-card.is-hovered img {
+  transform: translateY(-2px) scale(1.08) rotate(-4deg);
+  filter: saturate(1.08);
+}
+
+#mental .topic-card span {
+  transition:
+    color 0.24s ease,
+    letter-spacing 0.24s ease;
+}
+
+#mental .topic-card:hover span,
+#mental .topic-card:focus-visible span,
+#mental .topic-card.is-hovered span {
+  color: #165d60;
+  letter-spacing: 0.01em;
 }
 
 .flow {
@@ -250,16 +327,109 @@ a {
 
 .flow-grid {
   margin-bottom: 34px;
+  position: relative;
+  counter-reset: flow-step;
+  --flow-progress: 0%;
+}
+
+.flow-grid::before {
+  content: "";
+  position: absolute;
+  left: 13%;
+  top: 50%;
+  width: 74%;
+  height: 4px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(44, 138, 135, 0.16) 0%,
+    rgba(44, 138, 135, 0.32) 100%
+  );
+  z-index: 0;
+}
+
+.flow-grid::after {
+  content: "";
+  position: absolute;
+  left: 13%;
+  top: 50%;
+  width: var(--flow-progress);
+  max-width: 74%;
+  height: 4px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, #2b8e8a 0%, #53b6aa 100%);
+  z-index: 1;
+  transition: width 0.34s ease;
 }
 
 .flow-card {
   max-width: 328px;
   min-height: 96px;
   font-size: clamp(31px, 1.72vw, 40px);
+  position: relative;
+  z-index: 2;
+}
+
+.flow-card::after {
+  counter-increment: flow-step;
+  content: counter(flow-step);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #d8eceb;
+  color: #155d5e;
+  border: 2px solid rgba(21, 93, 94, 0.25);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 800;
+  transition:
+    transform 0.24s ease,
+    background 0.24s ease,
+    color 0.24s ease,
+    border-color 0.24s ease;
 }
 
 .flow-card img {
   height: 52px;
+}
+
+.flow-card.trail {
+  border-color: rgba(41, 137, 134, 0.38);
+  background: linear-gradient(120deg, #ffffff 0%, #eef9f8 100%);
+}
+
+.flow-card.is-active,
+.flow-card:hover,
+.flow-card:focus-visible {
+  transform: perspective(860px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg)) translateY(-7px) scale(1.03);
+  box-shadow: 0 16px 30px rgba(15, 58, 59, 0.24);
+}
+
+.flow-card.trail::after {
+  background: #bde8e4;
+  border-color: rgba(20, 91, 92, 0.34);
+}
+
+.flow-card.is-active::after,
+.flow-card:hover::after,
+.flow-card:focus-visible::after {
+  background: #2b8e8a;
+  color: #fff;
+  border-color: #2b8e8a;
+  transform: scale(1.1);
+}
+
+.flow-card:hover img,
+.flow-card:focus-visible img,
+.flow-card.is-active img {
+  transform: translateY(-2px) scale(1.08);
 }
 
 .contact-section {
@@ -503,7 +673,12 @@ a {
   right: -15%;
   bottom: -56px;
   height: 180px;
-  background: radial-gradient(120% 100% at 22% 20%, #d9ebf6 0%, #c7deee 64%, transparent 65%);
+  background: radial-gradient(
+    120% 100% at 22% 20%,
+    #d9ebf6 0%,
+    #c7deee 64%,
+    transparent 65%
+  );
 }
 
 .mental-intro {
@@ -792,6 +967,16 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .flow-grid::before,
+  .flow-grid::after {
+    display: none;
+  }
+
+  .flow-card::after {
+    top: 8px;
+    right: 8px;
+  }
+
   .contact-form {
     grid-template-columns: 1fr;
   }
@@ -841,5 +1026,22 @@ a {
     transform: none !important;
     opacity: 1 !important;
     filter: none !important;
+  }
+
+  .topic-card,
+  .flow-card,
+  .flow-grid::after,
+  .topic-card::before,
+  .flow-card::after {
+    transition: none !important;
+  }
+
+  #mental .topic-card:hover,
+  #mental .topic-card:focus-visible,
+  #mental .topic-card.is-hovered,
+  .flow-card.is-active,
+  .flow-card:hover,
+  .flow-card:focus-visible {
+    transform: none !important;
   }
 }
